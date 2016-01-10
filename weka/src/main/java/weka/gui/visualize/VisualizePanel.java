@@ -162,14 +162,7 @@ public class VisualizePanel extends PrintablePanel {
               m_shapePoints.add(new Double(e.getY()));
               m_shapePoints.add(new Double(e.getX()));
               m_shapePoints.add(new Double(e.getY()));
-              // Graphics g = PlotPanel.this.getGraphics();
-              Graphics g = m_plot2D.getGraphics();
-              g.setColor(Color.black);
-              g.setXORMode(Color.white);
-              g.drawRect(m_shapePoints.get(1).intValue(), m_shapePoints.get(2)
-                .intValue(), m_shapePoints.get(3).intValue()
-                - m_shapePoints.get(1).intValue(), m_shapePoints.get(4)
-                .intValue() - m_shapePoints.get(2).intValue());
+              Graphics g = createGraphics(m_plot2D, m_shapePoints);
               g.dispose();
             }
             // System.out.println("clicked");
@@ -359,13 +352,8 @@ public class VisualizePanel extends PrintablePanel {
           if (m_createShape) {
             if (m_shapePoints.get(0).intValue() == 1) {
               m_createShape = false;
-              Graphics g = m_plot2D.getGraphics();
-              g.setColor(Color.black);
-              g.setXORMode(Color.white);
-              g.drawRect(m_shapePoints.get(1).intValue(), m_shapePoints.get(2)
-                .intValue(), m_shapePoints.get(3).intValue()
-                - m_shapePoints.get(1).intValue(), m_shapePoints.get(4)
-                .intValue() - m_shapePoints.get(2).intValue());
+
+              Graphics g = createGraphics(m_plot2D, m_shapePoints);
 
               g.dispose();
               if (checkPoints(m_shapePoints.get(1).doubleValue(), m_shapePoints
@@ -421,13 +409,7 @@ public class VisualizePanel extends PrintablePanel {
           // check if the user is dragging a box
           if (m_createShape) {
             if (m_shapePoints.get(0).intValue() == 1) {
-              Graphics g = m_plot2D.getGraphics();
-              g.setColor(Color.black);
-              g.setXORMode(Color.white);
-              g.drawRect(m_shapePoints.get(1).intValue(), m_shapePoints.get(2)
-                .intValue(), m_shapePoints.get(3).intValue()
-                - m_shapePoints.get(1).intValue(), m_shapePoints.get(4)
-                .intValue() - m_shapePoints.get(2).intValue());
+              Graphics g = createGraphics(m_plot2D, m_shapePoints);
 
               m_shapePoints.set(3, new Double(e.getX()));
               m_shapePoints.set(4, new Double(e.getY()));
@@ -2445,6 +2427,23 @@ public class VisualizePanel extends PrintablePanel {
   }
 
   /**
+   * Refactor for duplicate codes by CFS-ID:149005593
+   * @param m_plot2D 
+   * @param m_shapePoints
+   * @return a new object of Graphics
+   */
+private Graphics createGraphics(Plot2D m_plot2D, ArrayList<Double> m_shapePoints) {
+	Graphics g = m_plot2D.getGraphics();
+	  g.setColor(Color.black);
+	  g.setXORMode(Color.white);
+	  g.drawRect(m_shapePoints.get(1).intValue(), m_shapePoints.get(2)
+	    .intValue(), m_shapePoints.get(3).intValue()
+	    - m_shapePoints.get(1).intValue(), m_shapePoints.get(4)
+	    .intValue() - m_shapePoints.get(2).intValue());
+	return g;
+}
+
+/**
    * Main method for testing this class
    * 
    * @param args the commandline parameters
